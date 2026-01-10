@@ -1,9 +1,9 @@
-import { App } from "../App";
-import type { RouterType } from "./type";
+import { AdminLayout } from '@/layouts'
+import type { RouterType } from './type'
 
-export const routers:RouterType[] = [
-    {
-        path:"/",
-        component:<App/>
-    }
+export const routers: RouterType[] = [
+  {
+    path: '/',
+    component:  <AdminLayout />
+  }
 ]
