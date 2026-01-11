@@ -1,4 +1,5 @@
 ﻿using AuthService.API;
+using AuthService.Infrastructure.IdentitySeed;
 using Microsoft.OpenApi.Models;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -17,11 +18,15 @@ if (app.Environment.IsDevelopment())
         options.RoutePrefix = "swagger"; 
     });
 }
-
+//SeedData
+using (var scope = app.Services.CreateScope())
+{
+    await IdentitySeed.SeedSuperAdminAsync(scope.ServiceProvider);
+}
 app.UseHttpsRedirection();
-
+app.UseStaticFiles();
+app.UseAuthentication();
 app.UseAuthorization();
-
+app.UseCors("AllowAll");
 app.MapControllers();
-
 app.Run();

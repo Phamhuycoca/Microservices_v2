@@ -1,4 +1,6 @@
-﻿using Microsoft.AspNetCore.Http;
+﻿using AuthService.Infrastructure.IRepositories;
+using AuthService.Infrastructure.Repositories;
+using Microsoft.AspNetCore.Http;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.DependencyInjection.Extensions;
 using System;
@@ -14,6 +16,7 @@ namespace AuthService.Infrastructure
         public static IServiceCollection AddInfrastructureModule(this IServiceCollection services)
         {
             services.TryAddSingleton<IHttpContextAccessor, HttpContextAccessor>();
+            services.AddScoped<IRefreshTokenRepo, RefreshTokenRepo>();
             return services;
         }
     }

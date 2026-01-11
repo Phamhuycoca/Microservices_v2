@@ -8,7 +8,7 @@ using Microsoft.Extensions.Options;
 using Microsoft.IdentityModel.Tokens;
 using Microsoft.OpenApi.Models;
 using System.Text;
-
+using AuthService.Application;
 namespace AuthService.API;
 
 public static class ConfigureServices
@@ -18,7 +18,7 @@ public static class ConfigureServices
         services.AddHttpContextAccessor();
         services.AddDbContext<ApplicationDbContext>(builder => builder.UseSqlServer(configuration.GetConnectionString("DefaultConnection")));
         //Cấu hình config application
-        //services.AddApplicationServices();
+        services.AddApplicationServices();
         // Đăng ký SwaggerGen với cấu hình JWT Bearer
         // Swagger
         services.AddEndpointsApiExplorer();
@@ -149,7 +149,7 @@ public static class ConfigureServices
             }
 
         });
-
+       
 
         return services;
     }
