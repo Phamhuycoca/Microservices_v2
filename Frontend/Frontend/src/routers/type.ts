@@ -4,4 +4,5 @@ export interface RouterType {
   path: string
   component: ReactNode
   protected?: boolean | false
+  children?: RouterType[]
 }
