@@ -22,7 +22,7 @@ namespace AuthService.Application.DTO
     {
         public string AccessToken { get; set; }
         public string RefreshToken { get; set; }
-        public DateTime AccessTokenExpiresAt { get; set; }
+        public int expires_in { get; set; }
     }
     public class RefreshTokenProfile : Profile
     {

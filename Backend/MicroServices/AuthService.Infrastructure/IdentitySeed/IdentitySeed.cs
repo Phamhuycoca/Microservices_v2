@@ -20,7 +20,7 @@ public static class IdentitySeed
 
         const string roleName = "SuperAdmin";
         const string userName = "admin";
-        const string password = "admin"; // đổi khi lên production
+        const string password = "1"; // đổi khi lên production
 
         // ===== 1. Tạo role nếu chưa có =====
         if (!await roleManager.RoleExistsAsync(roleName))

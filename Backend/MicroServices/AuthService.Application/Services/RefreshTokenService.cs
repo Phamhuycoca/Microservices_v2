@@ -36,6 +36,8 @@ namespace AuthService.Application.Services
             try
             {
                 var accessTokenExpires = DateTime.UtcNow.AddMinutes(_jwt.AccessTokenMinutes);
+                var expiresInSeconds = (int)((DateTimeOffset)accessTokenExpires).ToUnixTimeSeconds();
+             
                 var user = _userManager.Users.FirstOrDefault(x => x.Id == nguoi_dung_id);
                 if(user == null)
                 {
@@ -64,7 +66,7 @@ namespace AuthService.Application.Services
                 {
                     AccessToken = accessToken,
                     RefreshToken = refreshToken,
-                    AccessTokenExpiresAt = accessTokenExpires
+                    expires_in = expiresInSeconds
                 };
             }
             catch(Exception ex)

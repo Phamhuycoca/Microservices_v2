@@ -16,7 +16,13 @@ namespace AuthService.Application
     {
         public static IServiceCollection AddApplicationServices(this IServiceCollection services)
         {
-            services.AddAutoMapper(Assembly.GetExecutingAssembly());
+            var assembly = Assembly.GetExecutingAssembly();
+            var config = new MapperConfiguration(cfg =>
+            {
+                cfg.AddMaps(assembly);
+            });
+            IMapper mapper = config.CreateMapper();
+            services.AddSingleton(mapper);
             services.AddScoped<IRefreshTokenService, RefreshTokenService>();
             services.AddScoped<IAuthenService, AuthenService>();
             services.AddInfrastructureModule();

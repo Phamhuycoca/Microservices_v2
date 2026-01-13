@@ -1,14 +1,16 @@
-﻿using AuthService.Domain.Entites;
+﻿using AuthService.Application;
+using AuthService.Domain.Entites;
 using AuthService.Infrastructure.AppContext;
 using AuthService.Infrastructure.Configs;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Options;
 using Microsoft.IdentityModel.Tokens;
 using Microsoft.OpenApi.Models;
 using System.Text;
-using AuthService.Application;
+using System.Text.Json;
 namespace AuthService.API;
 
 public static class ConfigureServices
@@ -58,12 +60,13 @@ public static class ConfigureServices
             });
 
         });
-        services.AddAuthentication(options =>
-        {
-            options.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;
-            options.DefaultChallengeScheme = JwtBearerDefaults.AuthenticationScheme;
-        })
-            .AddJwtBearer(options =>
+        /* services.AddAuthentication(options =>
+         {
+             options.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;
+             options.DefaultChallengeScheme = JwtBearerDefaults.AuthenticationScheme;
+         })*/
+        services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
+             .AddJwtBearer(options =>
             {
                 // inject JwtOptions từ DI
                 var sp = services.BuildServiceProvider();
@@ -82,6 +85,42 @@ public static class ConfigureServices
 
                 options.Events = new JwtBearerEvents
                 {
+                    OnChallenge = context =>
+                    {
+                        context.HandleResponse();
+
+                        context.Response.StatusCode = StatusCodes.Status401Unauthorized;
+                        context.Response.ContentType = "application/json";
+
+                        var response = new
+                        {
+                            statusCode = 401,
+                            message = "Bạn chưa đăng nhập hoặc token không hợp lệ",
+                            traceId = context.HttpContext.TraceIdentifier
+                        };
+
+                        return context.Response.WriteAsync(
+                            JsonSerializer.Serialize(response)
+                        );
+                    },
+
+                    OnForbidden = context =>
+                    {
+                        context.Response.StatusCode = StatusCodes.Status403Forbidden;
+                        context.Response.ContentType = "application/json";
+
+                        var response = new
+                        {
+                            statusCode = 403,
+                            message = "Bạn không có quyền truy cập",
+                            traceId = context.HttpContext.TraceIdentifier
+                        };
+
+                        return context.Response.WriteAsync(
+                            JsonSerializer.Serialize(response)
+                        );
+                    },
+
                     OnMessageReceived = context =>
                     {
                         var accessToken = context.Request.Query["access_token"].FirstOrDefault();
@@ -93,7 +132,7 @@ public static class ConfigureServices
                     }
                 };
             });
-
+        services.AddAuthorization();
         //Cấu hình cors
         services.AddCors(options =>
         {
@@ -106,16 +145,16 @@ public static class ConfigureServices
                                 .AllowCredentials());
         });
         services.AddMemoryCache();
-        //services.Configure<JwtOptions>(configuration.GetSection("Jwt"));
+        services.Configure<JwtOptions>(configuration.GetSection("Jwt"));
         //services.Configure<UrlWebOptions>(configuration.GetSection("url_web"));
-        services.AddIdentity<nguoi_dung, IdentityRole<Guid>>(options =>
+        services.AddIdentityCore<nguoi_dung>(options =>
         {
             // Cấu hình password
             options.Password.RequireDigit = true;
             options.Password.RequireUppercase = false;
             options.Password.RequireLowercase = false;
             options.Password.RequireNonAlphanumeric = false;
-            options.Password.RequiredLength = 6;
+            options.Password.RequiredLength = 1;
 
             // User
             options.User.RequireUniqueEmail = true;
@@ -125,6 +164,7 @@ public static class ConfigureServices
             options.Lockout.DefaultLockoutTimeSpan = TimeSpan.FromMinutes(5);
             options.Lockout.MaxFailedAccessAttempts = 5;
         })
+        .AddRoles<IdentityRole<Guid>>()
         .AddEntityFrameworkStores<ApplicationDbContext>()
         .AddDefaultTokenProviders();
 
