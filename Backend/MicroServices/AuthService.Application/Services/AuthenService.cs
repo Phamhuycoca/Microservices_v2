@@ -45,7 +45,7 @@ namespace AuthService.Application.Services
                 var user = await _userManager.FindByNameAsync(dto.user_name);
                 if (user == null)
                 {
-                    throw new Exception("Sai tài khoản hoặc mật khẩu");
+                    throw new AppException(HttpStatusCode.BadRequest,"Sai tài khoản hoặc mật khẩu");
                 }
                 if (await _userManager.IsLockedOutAsync(user))
                 {

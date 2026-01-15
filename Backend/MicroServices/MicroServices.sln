@@ -13,6 +13,10 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AuthService.Domain", "AuthS
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AuthService.Infrastructure", "AuthService.Infrastructure\AuthService.Infrastructure.csproj", "{7C74ADA7-5FAD-4BEB-9F82-7C6B55E6AB7C}"
 EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "APIGetway", "APIGetway", "{D603B9BA-B745-4AE6-9C3D-6CDB13FE7B5E}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "APIGetway", "APIGetway\APIGetway.csproj", "{4541DF36-2ACE-4E0F-8E86-2FB7AFF6F4D0}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -35,6 +39,10 @@ Global
 		{7C74ADA7-5FAD-4BEB-9F82-7C6B55E6AB7C}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{7C74ADA7-5FAD-4BEB-9F82-7C6B55E6AB7C}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{7C74ADA7-5FAD-4BEB-9F82-7C6B55E6AB7C}.Release|Any CPU.Build.0 = Release|Any CPU
+		{4541DF36-2ACE-4E0F-8E86-2FB7AFF6F4D0}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{4541DF36-2ACE-4E0F-8E86-2FB7AFF6F4D0}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{4541DF36-2ACE-4E0F-8E86-2FB7AFF6F4D0}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{4541DF36-2ACE-4E0F-8E86-2FB7AFF6F4D0}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -44,6 +52,7 @@ Global
 		{44D68D8D-E651-4AA3-B7BF-1F428F71FFF1} = {02EA681E-C7D8-13C7-8484-4AC65E1B71E8}
 		{A1A537E1-6B8E-4B60-9951-2A1CC7B859C1} = {02EA681E-C7D8-13C7-8484-4AC65E1B71E8}
 		{7C74ADA7-5FAD-4BEB-9F82-7C6B55E6AB7C} = {02EA681E-C7D8-13C7-8484-4AC65E1B71E8}
+		{4541DF36-2ACE-4E0F-8E86-2FB7AFF6F4D0} = {D603B9BA-B745-4AE6-9C3D-6CDB13FE7B5E}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {7FF31430-DB2B-4359-90EF-88D30293613E}
