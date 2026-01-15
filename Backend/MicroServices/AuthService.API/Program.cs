@@ -22,6 +22,7 @@ try
     var builder = WebApplication.CreateBuilder(args);
     builder.Host.UseSerilog();
     builder.Services.AddControllers();
+    builder.Services.AddSwaggerGen();
 
     builder.Services.AddApicontrollerServices(builder.Configuration, builder.Environment);
     var app = builder.Build();
