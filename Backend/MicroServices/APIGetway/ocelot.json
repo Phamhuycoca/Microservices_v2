@@ -12,6 +12,22 @@
       "UpstreamPathTemplate": "/auth/{everything}",
       "UpstreamHttpMethod": [ "GET", "POST", "PUT", "DELETE" ],
       "SwaggerKey": "auth"
+    },
+    {
+      "DownstreamPathTemplate": "/api/Admin/{everything}",
+      "DownstreamScheme": "http",
+      "DownstreamHostAndPorts": [
+        {
+          "Host": "localhost",
+          "Port": 7002
+        }
+      ],
+      "UpstreamPathTemplate": "/admin/{everything}",
+      "UpstreamHttpMethod": [ "GET", "POST", "PUT", "DELETE" ],
+      "SwaggerKey": "admin",
+      "AuthenticationOptions": {
+        "AuthenticationProviderKey": "GatewayAuth"
+      }
     }
   ],
   "GlobalConfiguration": {
